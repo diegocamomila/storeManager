@@ -8,7 +8,7 @@
     "npm": ">=7.0.0"
   },
   "scripts": {
-    "diegotest": "mocha tests/unit/**/*.js --exit",
+    "diegotest": " nyc --all --include models --include services --include controllers mocha tests/unit/**/*.js --exit",
     "test": "jest --config ./jest.config.js --runInBand --detectOpenHandles",
     "test:mocha": "nyc --all --include models --include services --include controllers mocha tests/unit/**/*.js --exit",
     "start": "node index.js",
