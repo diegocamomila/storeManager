@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
-const connection = require('../models/connction');
+const { connection } = require('../../../models/connection');
 
 // Testa a função productsModels.js/getAll
 describe('Busca por todos os produtos do banco ', () => {
@@ -59,7 +59,7 @@ describe('Busca por todos os produtos do banco ', () => {
       });
     });
 
-    it('Denro dos objetos contem keys "Id" e "name"', async () => {
+    it('Dentro dos objetos contem keys "Id" e "name"', async () => {
       const result = await productsModels.getAll();
       result.map(item => {
         expect(item).to.include.all.keys('id', 'name');
