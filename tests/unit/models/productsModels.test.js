@@ -7,10 +7,10 @@ const  productsModels  = require('../../../models/productsModels');
 describe('Busca por todos os produtos do banco ', () => {
   describe('Quando não existe produto cadastrado', () => {
 
-    const rowsQuery = [[]]; 
+    const mochConnections = [[]]; 
 
     before(()=>{ 
-      sinon.stub(connection, 'execute').resolves(rowsQuery); 
+      sinon.stub(connection, 'execute').resolves(mochConnections); 
     });
 
     after(()=>{
@@ -29,7 +29,7 @@ describe('Busca por todos os produtos do banco ', () => {
   });
 
   describe('Quando existir produto cadastrado', () => {
-    const rowsQuery = [
+    const mochConnections = [
       {
        " id": 1,
         "name": 'Martelo de Thor'
@@ -41,7 +41,7 @@ describe('Busca por todos os produtos do banco ', () => {
     ];
     
     before(async () => {
-      sinon.stub(connection, 'execute').resolves([rowsQuery]);
+      sinon.stub(connection, 'execute').resolves([mochConnections]);
     });
 
     after(async () => {
