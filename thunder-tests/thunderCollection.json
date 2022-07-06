@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "e6da8773-157f-41b3-952e-0c7750353d2e",
+    "colName": "diego-storemanage",
+    "created": "2022-07-06T19:04:38.914Z",
+    "sortNum": 10000,
+    "folders": [
+      {
+        "_id": "8febb654-2849-41cd-b474-56605a6d4daa",
+        "name": "models",
+        "containerId": "",
+        "created": "2022-07-06T19:11:22.716Z",
+        "sortNum": 30000
+      }
+    ]
+  }
+]
