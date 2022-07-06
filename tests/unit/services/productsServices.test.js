@@ -11,11 +11,11 @@ describe('Busca por todos os produtos do banco ', () => {
     const rowsQuery = [[]]; 
 
     before(()=>{ 
-      sinon.stub(connection, 'execute').resolves(rowsQuery); 
+      sinon.stub(productsModels, 'execute').resolves(rowsQuery); 
     });
 
     after(()=>{
-      connection.execute.restore(); 
+      productsModels.execute.restore(); 
     });
 
     it('Retorna um array', async () => {
