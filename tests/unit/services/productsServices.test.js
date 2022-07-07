@@ -5,7 +5,7 @@ const  productsModels  = require('../../../models/productsModels');
 
 
 // Testa a função productsServices.js/getAll
-describe('Busca por todos os produtos do banco ', () => {
+describe('Busca por todos os produtos do banco (services) ', () => {
   describe('Quando não existe produto cadastrado', () => {
 
     const mochProductsModels = [[]]; 

@@ -4,7 +4,7 @@ const productsControllers = require('../../../controllers/productsControllers');
 const  productsServices  = require('../../../services/productsServices');
 
 // Testa função productsControllers.js/getAll
-describe('Busca por todos produtos no banco', () => {
+describe('Busca por todos produtos no banco (controllers)', () => {
   describe('Quando não existem produtos cadastrado', ()=>{
     const res = {}
     const req = {}
