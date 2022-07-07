@@ -1,4 +1,4 @@
-const connection = require('./connection');
+const connection = require('../helpers/connection');
 
 const getAll = async () => {
   const query = 'SELECT * FROM StoreManager.products ORDER BY id;';
@@ -14,27 +14,24 @@ const getById = async (id) => {
   return rows;
 };
 
-const addProduct = async ({ name }) => {
-  const QUERY = 'INSERT INTO StoreManager.products (name) VALUES (?)';
-  const [rows] = await connection.execute(QUERY, [name]);
-  const result = {
-    id: rows.insertId,
-    name,
-  };
+// const addProduct = async (name) => {
+//   const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
+//   const [rows] = await connection.execute(query, [name]);
+//   const id = rows.insertId;
+  
+//   return { id, name };
+//   };
 
-  return { result };
-};
+// const updateProduct = async ({ id, name }) => {
+//   const query = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
+//   await connection.execute(query, [name, id]);
 
-const updateProduct = async ({ id, name }) => {
-  const QUERY = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
-  await connection.execute(QUERY, [name, id]);
-
-  return { id, name };
-};
+//   return { id, name };
+// };
 
 module.exports = {
   getAll,
   getById,
-  addProduct,
-  updateProduct,
+  // addProduct,
+  // updateProduct,
 };
