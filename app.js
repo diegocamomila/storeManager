@@ -1,6 +1,10 @@
 const express = require('express');
-// inicio de projeto clone de repositorio.
+const router = require('./routes/index');
+
 const app = express();
+
+app.use(express.json());
+app.use(router);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
