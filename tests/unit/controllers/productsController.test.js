@@ -20,7 +20,8 @@ describe('Busca por todos produtos no banco (controllers)', () => {
     afterEach(() => {
       productsServices.getAll.restore();
     })
-    it('é chamado o next', async()=>{
+
+    it('é chamado o next', async() => {
       await productsControllers.getAll(req, res, nextSpy);
       expect(nextSpy.calledWith(erro)).to.be.equal(true);
     })
@@ -33,18 +34,17 @@ describe('Busca por todos produtos no banco (controllers)', () => {
     const mochProductsServices = [
       {
         "id": 1,
-        "name": "produto A",
-        "quantity": 10
+        "name": "Martelo de Thor"
       }
     ];
 
-    beforeEach(() => {
+    before(() => {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
-      sinon.stub(productsServices, 'getAll').resolves(mochProductsServices);
+      sinon.stub(productsServices, 'getAll').resolves([mochProductsServices]);
     })
 
-    afterEach(() => {
+    after(() => {
       productsServices.getAll.restore();
     });
 
