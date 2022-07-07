@@ -8,14 +8,14 @@ const  productsModels  = require('../../../models/productsModels');
 describe('Busca por todos os produtos do banco (services) ', () => {
   describe('Quando não existe produto cadastrado', () => {
 
-    const mochProductsModels = [[]]; 
+    // const mochProductsModels = [[]]; 
 
     before(()=>{ 
-      sinon.stub(productsModels, 'execute').resolves(mochProductsModels); 
+      sinon.stub(productsModels, 'getAll').resolves([]); 
     });
 
     after(()=>{
-      productsModels.execute.restore(); 
+      productsModels.getAll.restore(); 
     });
 
     it('Retorna um array', async () => {
@@ -32,7 +32,7 @@ describe('Busca por todos os produtos do banco (services) ', () => {
   describe('Quando existir produto cadastrado', () => {
     const mochProductsModels = [
       {
-       " id": 1,
+       "id": 1,
         "name": 'Martelo de Thor'
       },
       {
@@ -42,11 +42,11 @@ describe('Busca por todos os produtos do banco (services) ', () => {
     ];
     
     before(async () => {
-      sinon.stub(connection, 'execute').resolves([mochProductsModels]);
+      sinon.stub(productsModels, 'getAll').resolves(mochProductsModels);
     });
 
     after(async () => {
-      connection.execute.restore();
+      productsModels.getAll.restore();
     });
 
     it('Retorna um array', async () => {

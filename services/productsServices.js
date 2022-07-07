@@ -4,7 +4,7 @@ const treatsError = (status, message) => ({ status, message });
 
 const getAll = async () => {
   const rows = await productsModels.getAll();
-  if (rows.length < 1) {
+  if (!rows) {
     throw treatsError(404, 'Products not found');
   }
   return rows;
