@@ -31,7 +31,7 @@ describe('Busca por todos os produtos do banco (models) ', () => {
   describe('Quando existir produto cadastrado', () => {
     const mochConnections = [
       {
-       " id": 1,
+       "id": 1,
         "name": 'Martelo de Thor'
       },
       {

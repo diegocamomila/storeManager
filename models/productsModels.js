@@ -7,6 +7,6 @@ const getAll = async () => {
   return rows;
 };
 
-module.export = {
+module.exports = {
   getAll,
 };
