@@ -14,24 +14,24 @@ const getById = async (id) => {
   return rows;
 };
 
-// const addProduct = async (name) => {
-//   const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
-//   const [rows] = await connection.execute(query, [name]);
-//   const id = rows.insertId;
+const addProduct = async (name) => {
+  const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
+  const [rows] = await connection.execute(query, [name]);
+  const id = rows.insertId;
   
-//   return { id, name };
-//   };
+  return { id, name };
+  };
 
-// const updateProduct = async ({ id, name }) => {
-//   const query = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
-//   await connection.execute(query, [name, id]);
+const updateProduct = async ({ id, name }) => {
+  const query = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
+  await connection.execute(query, [name, id]);
 
-//   return { id, name };
-// };
+  return { id, name };
+};
 
 module.exports = {
   getAll,
   getById,
-  // addProduct,
-  // updateProduct,
+  addProduct,
+  updateProduct,
 };
