@@ -1,6 +1,6 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
-const connection = require('../../../models/connection');
+const connection = require('../../../helpers/connection');
 const  productsModels  = require('../../../models/productsModels');
 
 // Testa a função productsModels.js/getAll

@@ -1,15 +1,23 @@
+const { handleError } = require('../middlewares/productsMiddlewares');
 const productsModels = require('../models/productsModels');
+
+// const handleError = (status, message) => ({ status, message });
 
 const getAll = async () => {
   const rows = await productsModels.getAll();
-  if (!rows || null) return [];
+  if (!rows || rows.length === 0) {
+    throw handleError(404, 'Product not found');
+  }
+  
   return rows;
 };
 
 const getById = async (id) => {
-  const rows = await productsModels.getById(id);
-  if (!rows || null) return [];
-  return rows;
+  const product = await productsModels.getById(id);
+  if (product.length === 0) {
+    throw handleError(404, 'Product not found');
+  }
+  return product[0];
 };
 // const products = await productsModels.getAll();
 // const addProduct = async (name) => {
