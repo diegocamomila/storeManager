@@ -2,14 +2,14 @@ const productsModels = require('../models/productsModels');
 
 const getAll = async () => {
   const rows = await productsModels.getAll();
-  if (!rows || rows.length === 0) return [];
+  if (!rows || rows.length === undefined) return [];
    
   return rows;
 };
 
 const getById = async (id) => {
   const product = await productsModels.getById(id);
-  if (!product || product.length === 0) return [];
+  if (!product || product.length === undefined) return [];
 
   return product;
 };
@@ -45,7 +45,7 @@ const updateProduct = async (id, name) => {
 }
     
   const product = await productsModels.updateProduct(id, name);
-  if (product.length === 0) {
+  if (!product || product.length === 0) {
  return {
     error: { code: 404, message: 'Product not found' },
   }; 
@@ -56,7 +56,7 @@ const updateProduct = async (id, name) => {
     
 const deleteProduct = async (id) => {
   const result = await productsModels.deleteProduct(id);
-  if (result.length === 0) {
+  if (!result || result.length === 0) {
     return {
       error: { code: 404, message: 'Product not found' },
     };
