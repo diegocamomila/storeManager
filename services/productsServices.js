@@ -1,38 +1,62 @@
-const { handleError } = require('../middlewares/productsMiddlewares');
 const productsModels = require('../models/productsModels');
 
 const getAll = async () => {
   const rows = await productsModels.getAll();
-  if (!rows || rows.length === 0) {
-    throw handleError(404, 'Product not found');
-  }
-  
+  if (!rows || rows.length === 0) return [];
+   
   return rows;
 };
 
 const getById = async (id) => {
   const product = await productsModels.getById(id);
-  if (product.length === 0) {
-    throw handleError(404, 'Product not found');
-  }
-  return product[0];
+  if (!product || product.length === 0) return [];
+
+  return product;
 };
 
 const addProduct = async (name) => {
-  const product = await productsModels.getAll(name);
-     if (product.length !== 0) {
-    throw handleError(409, 'Product already exists');
-    }
-  const createProduct = await productsModels.addProduct(name); 
-  return createProduct;
+  if (name.length < 1) {
+    return {
+      error: { code: 400, message: '"name" is required' },
+    }; 
+  }
+
+  if (name.length < 5) {
+    return {
+      error: { code: 422, message: '"name" length must be at least 5 characters long' },
+    };
+  }
+  
+  const product = await productsModels.addProduct(name);
+  return product;
 };
 
-const updateProduct = async (name) => {
-  const product = await productsModels.getById(name.id);
-  if (product.length === 0) {
-    throw handleError(404, 'Product not found');
+const updateProduct = async (id, name) => {
+  if (name.length < 1) {
+    return {
+      error: { code: 400, message: '"name" is required' },
+    };
   }
-  await productsModels.updateProduct(name);
+
+  if (name.length < 5) {
+    return {
+      error: { code: 422, message: '"name" length must be at least 5 characters long' },
+    };
+  }
+  
+  const product = await productsModels.updateProduct(id, name);
+  if (product.length < 1) {
+ return {
+    error: { code: 404, message: 'Product not found' },
+  }; 
+}
+  return product;
+}; 
+    
+const deleteProduct = async (id) => {
+  const result = await productsModels.deleteProduct(id);
+  if (result.length === 0) return { error: { code: 404, message: 'Product not found' } };
+  return result;
 };
 
 module.exports = {
@@ -40,4 +64,5 @@ module.exports = {
   getById,
   addProduct,
   updateProduct,
+  deleteProduct,
 };

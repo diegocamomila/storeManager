@@ -11,28 +11,36 @@ const getById = async (id) => {
   const query = 'SELECT * FROM StoreManager.products WHERE id = ?;';
   const [rows] = await connection.execute(query, [id]);
 
-  return rows[0];
+  return rows;
 };
 
 const addProduct = async (name) => {
   const query = 'INSERT INTO StoreManager.products (name) VALUES (?)';
-  const [{ rowsInsert }] = await connection.execute(query, [name]);
+  const [row] = await connection.execute(query, [name]);
+  const rowsAdd = { id: row.insertId, name };
    
-  return rowsInsert;
-  };
+  return rowsAdd;
+};
 
-const updateProduct = async ({ id, name }) => {
+const updateProduct = async (id, name) => {
+  const validateId = await getById(id);
+    if (!validateId.length === 0) return [];
+  
   const query = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
-  await connection.execute(query, [name, id]);
-
-  return { id, name };
+    await connection.execute(query, [name, id]);
+    const result = { id, name };
+    
+  return result;
 };
 
 const deleteProduct = async (id) => {
-  const query = 'DELETE FROM StoreManager.products WHERE id = ?;';
-  await connection.execute(query, [id]);
+  const searchId = await getById(id);
+    if (searchId.length === 0) return [];
 
-  return { id };
+  const query = 'DELETE FROM StoreManager.products WHERE id = ?;';
+    const [rows] = await connection.execute(query, [id]);
+
+  return rows;
 };
 
 module.exports = {

@@ -5,27 +5,31 @@ const  productsServices  = require('../../../services/productsServices');
 
 // Testa função productsControllers.js/getAll
 describe('Busca por todos produtos no banco (controllers)', () => {
-  describe('Quando não existem produtos cadastrado', ()=>{
+  describe('Quando não existem produtos cadastrado', () => {
     const res = {}
     const req = {}
-    const nextSpy = sinon.spy() // https://imasters.com.br/front-end/testes-em-javascript-diferenca-entre-fake-spy-stub-e-mock
-    const erro = { status:404, message:'Products not found'}
 
     beforeEach(() => {
+      req.params = { id: 1 };
       res.status = sinon.stub().returns(res);
-      res.json = sinon.stub().returns();
-      sinon.stub(productsServices, 'getAll').throws(erro);
-    })
+      res.send = sinon.stub().returns();
+      sinon.stub(productsServices, 'getById').resolves(false);
+    });
 
     afterEach(() => {
-      productsServices.getAll.restore();
-    })
+      productsServices.getById.restore();
+    });
 
-    it('é chamado o next', async() => {
-      await productsControllers.getAll(req, res, nextSpy);
-      expect(nextSpy.calledWith(erro)).to.be.equal(true);
-    })
-  })
+    it("Retorna status 404", async () => {
+      await productsControllers.getById(req, res);
+      expect(res.status.calledWith(404)).to.be.equal(true);
+    });
+
+    // it('retorna um  json com strings "product not found"', async () => {
+    //   await productsControllers.getById(req, res);
+    //   expect(response.send.calledWith({message: 'Product not found'})).to.be.equal(true);
+    // });
+  });
   
   describe('Quando existem produtos no banco', () => {
     const res = {};
@@ -42,7 +46,7 @@ describe('Busca por todos produtos no banco (controllers)', () => {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon.stub(productsServices, 'getAll').resolves([mochProductsServices]);
-    })
+    });
 
     after(() => {
       productsServices.getAll.restore();
@@ -54,7 +58,7 @@ describe('Busca por todos produtos no banco (controllers)', () => {
       expect(res.status.calledWith(200)).to.be.equal(true);
     });
 
-    it('Retorna um JSON com array', async () => {
+    it('Retorna um JSON de array', async () => {
       await productsControllers.getAll(req, res);
 
       expect(res.json.calledWith(sinon.match.array)).to.be.equal(true);
