@@ -32,7 +32,7 @@ const addProduct = async (name) => {
 };
 
 const updateProduct = async (id, name) => {
-  if (!name || name === undefined) {
+  if (!name) {
  return {
     error: { code: 400, message: '"name" is required' },
   }; 
@@ -45,7 +45,7 @@ const updateProduct = async (id, name) => {
 }
     
   const product = await productsModels.updateProduct(id, name);
-  if (product.length < 1) {
+  if (product.length === 0) {
  return {
     error: { code: 404, message: 'Product not found' },
   }; 

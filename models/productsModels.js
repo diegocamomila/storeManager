@@ -24,9 +24,9 @@ const addProduct = async (name) => {
 
 const updateProduct = async (id, name) => {
   const validateId = await getById(id);
-    if (!validateId.length === 0) return [];
+    if (validateId.length === 0) return [];
   
-  const query = 'UPDATE StoreManager.products SET name = ?, WHERE id = ?;';
+  const query = 'UPDATE StoreManager.products SET name = ? WHERE id = ?;';
     await connection.execute(query, [name, id]);
     const result = { id, name };
     
