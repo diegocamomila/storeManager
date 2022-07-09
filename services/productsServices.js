@@ -15,7 +15,7 @@ const getById = async (id) => {
 };
 
 const addProduct = async (name) => {
-  if (name.length < 1) {
+  if (!name || name === undefined) {
     return {
       error: { code: 400, message: '"name" is required' },
     }; 
@@ -32,24 +32,25 @@ const addProduct = async (name) => {
 };
 
 const updateProduct = async (id, name) => {
-  if (name.length < 1) {
-    return {
-      error: { code: 400, message: '"name" is required' },
-    };
-  }
-
-  if (name.length < 5) {
-    return {
-      error: { code: 422, message: '"name" length must be at least 5 characters long' },
-    };
-  }
+  if (!name || name === undefined) {
+ return {
+    error: { code: 400, message: '"name" is required' },
+  }; 
+}
   
+  if (name.length < 5) {
+ return {
+      error: { code: 422, message: '"name" length must be at least 5 characters long' },
+    }; 
+}
+    
   const product = await productsModels.updateProduct(id, name);
   if (product.length < 1) {
  return {
     error: { code: 404, message: 'Product not found' },
   }; 
-}
+} 
+
   return product;
 }; 
     
