@@ -23,7 +23,7 @@ const addProduct = async (req, res) => {
     if (product.error) {
       return res.status(product.error.code).json({ message: product.error.message });
     }
-    res.status(201).send({ product });
+    res.status(201).send(product);
 };
 
 const updateProduct = async (req, res) => {

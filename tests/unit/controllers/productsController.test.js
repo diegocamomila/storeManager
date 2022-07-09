@@ -35,17 +35,10 @@ describe('Busca por todos produtos no banco (controllers)', () => {
     const res = {};
     const req = {};
 
-    const mochProductsServices = [
-      {
-        "id": 1,
-        "name": "Martelo de Thor"
-      }
-    ];
-
     before(() => {
       res.status = sinon.stub().returns(res);
-      res.json = sinon.stub().returns();
-      sinon.stub(productsServices, 'getAll').resolves([mochProductsServices]);
+      res.send = sinon.stub().returns();
+      sinon.stub(productsServices, 'getAll').resolves(true);
     });
 
     after(() => {
@@ -58,10 +51,10 @@ describe('Busca por todos produtos no banco (controllers)', () => {
       expect(res.status.calledWith(200)).to.be.equal(true);
     });
 
-    it('Retorna um JSON de array', async () => {
+    it('Retorna um JSON de objetos', async () => {
       await productsControllers.getAll(req, res);
 
-      expect(res.json.calledWith(sinon.match.array)).to.be.equal(true);
+      expect(res).to.be.a('object');
     });
 
   });
