@@ -56,7 +56,12 @@ const updateProduct = async (id, name) => {
     
 const deleteProduct = async (id) => {
   const result = await productsModels.deleteProduct(id);
-  if (result.length === 0) return { error: { code: 404, message: 'Product not found' } };
+  if (result.length === 0) {
+    return {
+      error: { code: 404, message: 'Product not found' },
+    };
+  }
+  
   return result;
 };
 
