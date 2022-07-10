@@ -1,6 +1,5 @@
 const express = require('express');
 const productsControllers = require('../controllers/productsControllers');
-// const rescue = require(' express.rescue'); 
 
 const productsRoutes = express.Router();
 

@@ -1,9 +1,9 @@
 const salesServices = require('../services/selesServices');
 
 const addSalesProducts = async (req, res) => {
-  const newSales = req.body;
+  const createNewSales = req.body;
 
-  const result = await salesServices.addSalesProducts(newSales);
+  const result = await salesServices.addSalesProducts(createNewSales);
 
   if (result.error) {
     return res.status(result.error.code).json({ message: result.error.message });

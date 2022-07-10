@@ -7,45 +7,45 @@ const productsModels = require('../models/productsModels');
 // "every" precisa todos elemento do arry atenda para retornar true
 // [12, 54, 18, 130, 44].every(elem => elem >= 10); // true
 
-const addSalesValidations = (addSeles, listeProducts) => {
+const addSalesValidations = (createNewSale, listeProducts) => {
     // verifica se o campo productId tem valor
-  if (addSeles.some((elem) => !elem.productId)) {
+  if (createNewSale.some((elem) => (elem.productId === undefined))) {
   return { error: { code: 400, message: '"productId" is required' } };
   }
     // verifica se o campo quantity tem valor
-  if (addSeles.some((elem) => !elem.quantity)) {
+  if (createNewSale.some((elem) => (elem.quantity === undefined))) {
   return { error: { code: 400, message: '"quantity" is required' } };
   } 
     // verifica se o campo quantity tem valor menor ou igual 0
-  if (addSeles.some((elem) => elem.quantity <= 0)) {
+  if (createNewSale.some((elem) => elem.quantity < 1)) {
     return {
       error: { code: 422, message: '"quantity" must be greater than or equal to 1' },
     };
   }
   // verifica se é possivel a venda de produto inexixtente requisiçao
   // com apenas um item ou varios 
-  if (!addSeles.every((elem) => listeProducts.some((prodt) => elem.productId === prodt.id))) {
+  if (!createNewSale.every((elem) => listeProducts.some((prodt) => elem.productId === prodt.id))) {
     return { error: { code: 404, message: 'Product not found' } };
   }
   
   return false;
 };
                                  // productID: 2, quantity: 5
-const addSalesProducts = async (addSalesPT) => {
+const addSalesProducts = async (createNewSale) => {
   const productsList = await productsModels.getAll();
 
-  const validation = addSalesValidations(addSalesPT, productsList);
+  const validation = addSalesValidations(createNewSale, productsList);
   if (validation) {
     return validation; // false
   }
   
   const id = await salesModels.addSales();
     
-  await Promise.all(addSalesPT
+  await Promise.all(createNewSale
     .map((sale) => salesModels.addSalesProducts(id, sale.productId, sale.quantity)));
   return {
     id,
-    itemsSold: addSalesPT,
+    itemsSold: createNewSale,
   }; 
 };
 
