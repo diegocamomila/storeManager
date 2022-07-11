@@ -48,8 +48,43 @@ const addSalesProducts = async (createNewSale) => {
     itemsSold: createNewSale,
   }; 
 };
+// O método map() invoca a função callback passada por argumento 
+// para cada elemento do Array e devolve um novo Array como resultado.
+
+const getAllSales = async () => {
+  const results = await salesModels.getAllSales();
+
+  if (!results) return [];
+
+    const result = (results.map(
+    ({ sale_id: saleId, date, product_id: productId, quantity }) => ({
+      saleId,
+      date,
+      productId,
+      quantity,
+    }),
+  ));
+  return result;
+};
+
+const getByIdSales = async (id) => {
+  const results = await salesModels.getByIdSales(id);
+
+  if (!results) return [];
+
+    const result = (results.map(
+    ({ date, product_id: productId, quantity }) => ({
+      date,
+      productId,
+      quantity,
+    }),
+  ));
+  return result;
+};
 
 module.exports = {
   addSalesValidations,
-  addSalesProducts, 
+  addSalesProducts,
+  getAllSales,
+  getByIdSales,
 };
